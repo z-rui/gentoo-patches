@@ -1,0 +1,109 @@
+diff --git a/thunar/thunar-column-editor.c b/thunar/thunar-column-editor.c
+index 6476f7c..4e2724c 100644
+--- a/thunar/thunar-column-editor.c
++++ b/thunar/thunar-column-editor.c
+@@ -200,7 +200,7 @@ thunar_column_editor_init (ThunarColumnEditor *column_editor)
+   gtk_grid_attach (GTK_GRID (grid), column_editor->up_button, 1, 1, 1, 1);
+   gtk_widget_show (column_editor->up_button);
+ 
+-  image = gtk_image_new_from_icon_name ("go-up-symbolic", GTK_ICON_SIZE_BUTTON);
++  image = gtk_image_new_from_icon_name ("go-up", GTK_ICON_SIZE_BUTTON);
+   gtk_button_set_always_show_image (GTK_BUTTON (column_editor->up_button), TRUE);
+   gtk_button_set_image (GTK_BUTTON (column_editor->up_button), image);
+   gtk_widget_show (image);
+@@ -211,7 +211,7 @@ thunar_column_editor_init (ThunarColumnEditor *column_editor)
+   gtk_grid_attach (GTK_GRID (grid), column_editor->down_button, 1, 2, 1, 1);
+   gtk_widget_show (column_editor->down_button);
+ 
+-  image = gtk_image_new_from_icon_name ("go-down-symbolic", GTK_ICON_SIZE_BUTTON);
++  image = gtk_image_new_from_icon_name ("go-down", GTK_ICON_SIZE_BUTTON);
+   gtk_button_set_always_show_image (GTK_BUTTON (column_editor->down_button), TRUE);
+   gtk_button_set_image (GTK_BUTTON (column_editor->down_button), image);
+   gtk_widget_show (image);
+diff --git a/thunar/thunar-history.c b/thunar/thunar-history.c
+index 8e21047..38fc901 100644
+--- a/thunar/thunar-history.c
++++ b/thunar/thunar-history.c
+@@ -162,7 +162,7 @@ static void
+ thunar_history_init (ThunarHistory *history)
+ {
+   /* create the "back" action */
+-  history->action_back = thunar_history_action_new ("back", _("Back"), _("Go to the previous visited folder"), "go-previous-symbolic");
++  history->action_back = thunar_history_action_new ("back", _("Back"), _("Go to the previous visited folder"), "go-previous");
+   g_signal_connect (G_OBJECT (history->action_back), "activate", G_CALLBACK (thunar_history_action_back), history);
+   g_signal_connect (G_OBJECT (history->action_back), "show-menu", G_CALLBACK (thunar_history_show_menu), history);
+ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+@@ -170,7 +170,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+ G_GNUC_END_IGNORE_DEPRECATIONS
+ 
+   /* create the "forward" action */
+-  history->action_forward = thunar_history_action_new ("forward", _("Forward"), _("Go to the next visited folder"), "go-next-symbolic");
++  history->action_forward = thunar_history_action_new ("forward", _("Forward"), _("Go to the next visited folder"), "go-next");
+   g_signal_connect (G_OBJECT (history->action_forward), "activate", G_CALLBACK (thunar_history_action_forward), history);
+   g_signal_connect (G_OBJECT (history->action_forward), "show-menu", G_CALLBACK (thunar_history_show_menu), history);
+ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+diff --git a/thunar/thunar-location-button.c b/thunar/thunar-location-button.c
+index be16161..e8f3e25 100644
+--- a/thunar/thunar-location-button.c
++++ b/thunar/thunar-location-button.c
+@@ -415,7 +415,7 @@ thunar_location_button_file_changed (ThunarLocationButton *location_button,
+   /* the image is only visible for certain special paths */
+   if (thunar_file_is_home (file) || thunar_file_is_desktop (file) || thunar_file_is_root (file))
+     {
+-      icon_name = g_strdup_printf ("%s-symbolic", thunar_file_get_icon_name (file,
++      icon_name = g_strdup_printf ("%s", thunar_file_get_icon_name (file,
+                                                                              location_button->file_icon_state,
+                                                                              icon_theme));
+ 
+diff --git a/thunar/thunar-location-entry.c b/thunar/thunar-location-entry.c
+index fff18e1..670b84d 100644
+--- a/thunar/thunar-location-entry.c
++++ b/thunar/thunar-location-entry.c
+@@ -190,7 +190,7 @@ thunar_location_entry_init (ThunarLocationEntry *location_entry)
+ 
+   /* put reload button in entry */
+   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (location_entry->path_entry),
+-                                     GTK_ENTRY_ICON_SECONDARY, "view-refresh-symbolic");
++                                     GTK_ENTRY_ICON_SECONDARY, "view-refresh");
+   gtk_entry_set_icon_tooltip_text (GTK_ENTRY (location_entry->path_entry),
+                                    GTK_ENTRY_ICON_SECONDARY, _("Reload the current folder"));
+   g_signal_connect (G_OBJECT (location_entry->path_entry), "icon-release",
+diff --git a/thunar/thunar-path-entry.c b/thunar/thunar-path-entry.c
+index 049e0ed..fc597a8 100644
+--- a/thunar/thunar-path-entry.c
++++ b/thunar/thunar-path-entry.c
+@@ -707,7 +707,7 @@ thunar_path_entry_update_icon (ThunarPathEntry *path_entry)
+     {
+       gtk_entry_set_icon_from_icon_name (GTK_ENTRY (path_entry),
+                                          GTK_ENTRY_ICON_PRIMARY,
+-                                         "dialog-error-symbolic");
++                                         "dialog-error");
+     }
+ }
+ 
+diff --git a/thunar/thunar-window.c b/thunar/thunar-window.c
+index 6db84bf..dcf8f7a 100644
+--- a/thunar/thunar-window.c
++++ b/thunar/thunar-window.c
+@@ -358,15 +358,15 @@ static GtkActionEntry action_entries[] =
+   { "edit-menu", NULL, N_ ("_Edit"), NULL, },
+   { "preferences", "preferences-system", N_ ("Pr_eferences..."), NULL, N_ ("Edit Thunars Preferences"), G_CALLBACK (thunar_window_action_preferences), },
+   { "view-menu", NULL, N_ ("_View"), NULL, },
+-  { "reload", "view-refresh-symbolic", N_ ("_Reload"), "<control>R", N_ ("Reload the current folder"), G_CALLBACK (thunar_window_action_reload), },
++  { "reload", "view-refresh", N_ ("_Reload"), "<control>R", N_ ("Reload the current folder"), G_CALLBACK (thunar_window_action_reload), },
+   { "view-location-selector-menu", NULL, N_ ("_Location Selector"), NULL, },
+   { "view-side-pane-menu", NULL, N_ ("_Side Pane"), NULL, },
+-  { "zoom-in", "zoom-in-symbolic", N_ ("Zoom I_n"), "<control>plus", N_ ("Show the contents in more detail"), G_CALLBACK (thunar_window_action_zoom_in), },
+-  { "zoom-out", "zoom-out-symbolic", N_ ("Zoom _Out"), "<control>minus", N_ ("Show the contents in less detail"), G_CALLBACK (thunar_window_action_zoom_out), },
+-  { "zoom-reset", "zoom-original-symbolic", N_ ("Normal Si_ze"), "<control>0", N_ ("Show the contents at the normal size"), G_CALLBACK (thunar_window_action_zoom_reset), },
++  { "zoom-in", "zoom-in", N_ ("Zoom I_n"), "<control>plus", N_ ("Show the contents in more detail"), G_CALLBACK (thunar_window_action_zoom_in), },
++  { "zoom-out", "zoom-out", N_ ("Zoom _Out"), "<control>minus", N_ ("Show the contents in less detail"), G_CALLBACK (thunar_window_action_zoom_out), },
++  { "zoom-reset", "zoom-original", N_ ("Normal Si_ze"), "<control>0", N_ ("Show the contents at the normal size"), G_CALLBACK (thunar_window_action_zoom_reset), },
+   { "go-menu", NULL, N_ ("_Go"), NULL, },
+-  { "open-parent", "go-up-symbolic", N_ ("Open _Parent"), "<alt>Up", N_ ("Open the parent folder"), G_CALLBACK (thunar_window_action_go_up), },
+-  { "open-home", "go-home-symbolic", N_ ("_Home"), "<alt>Home", N_ ("Go to the home folder"), G_CALLBACK (thunar_window_action_open_home), },
++  { "open-parent", "go-up", N_ ("Open _Parent"), "<alt>Up", N_ ("Open the parent folder"), G_CALLBACK (thunar_window_action_go_up), },
++  { "open-home", "go-home", N_ ("_Home"), "<alt>Home", N_ ("Go to the home folder"), G_CALLBACK (thunar_window_action_open_home), },
+   { "open-desktop", "user-desktop", N_ ("Desktop"), NULL, N_ ("Go to the desktop folder"), G_CALLBACK (thunar_window_action_open_desktop), },
+   { "open-file-system", "drive-harddisk", N_ ("File System"), NULL, N_ ("Browse the file system"), G_CALLBACK (thunar_window_action_open_file_system), },
+   { "open-network", "network-workgroup", N_("B_rowse Network"), NULL, N_ ("Browse local network connections"), G_CALLBACK (thunar_window_action_open_network), },
