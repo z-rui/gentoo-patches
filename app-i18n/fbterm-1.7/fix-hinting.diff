@@ -1,0 +1,22 @@
+diff --git a/src/font.cpp b/src/font.cpp
+index 14b922f..6229c98 100644
+--- a/src/font.cpp
++++ b/src/font.cpp
+@@ -245,16 +245,7 @@ static void openFont(u32 index)
+ 	if (scalable && antialias) load_flags |= FT_LOAD_NO_BITMAP;
+ 
+ 	if (antialias) {
+-		FcBool hinting;
+-		int hint_style;
+-		FcPatternGetBool(pattern, FC_HINTING, 0, &hinting);
+-		FcPatternGetInteger(pattern, FC_HINT_STYLE, 0, &hint_style);
+-
+-		if (!hinting || hint_style == FC_HINT_NONE) {
+-			load_flags |= FT_LOAD_NO_HINTING;
+-		} else {
+-			load_flags |= FT_LOAD_TARGET_LIGHT;
+-		}
++		load_flags |= FT_LOAD_TARGET_NORMAL;
+ 	} else {
+ 		load_flags |= FT_LOAD_TARGET_MONO;
+ 	}
