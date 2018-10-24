@@ -1,0 +1,12 @@
+diff --git a/examples/rlfe/rlfe.c b/examples/rlfe/rlfe.c
+index f40b2dd..ad4ffed 100644
+--- a/examples/rlfe/rlfe.c
++++ b/examples/rlfe/rlfe.c
+@@ -420,6 +420,7 @@ main(int argc, char** argv)
+     read_history (hist_file);
+ 
+   set_edit_mode ();
++  rl_bind_key('\t', rl_insert);
+ 
+   rl_readline_name = APPLICATION_NAME;
+   
